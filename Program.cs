@@ -1,3 +1,4 @@
+using Ap1_P1_JairoCamilo;
 using Ap1_P1_JairoCamilo.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddBlazorBootstrap();
 
 var app = builder.Build();
 

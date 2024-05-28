@@ -7,12 +7,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazor.Bootstrap" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameWorkCore" Version="8.0.5" />
     <PackageReference Include="Microsoft.EntityFrameWorkCore.sqlite" Version="8.0.5" />
     <PackageReference Include="Microsoft.EntityFrameWorkCore.Tools" Version="8.0.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Data\" />
+    <Folder Include="DAL\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>
