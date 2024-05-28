@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+var ConStr = builder.Configuration.GetConnectionString("ConStr");
+
 builder.Services.AddBlazorBootstrap();
 
 var app = builder.Build();
