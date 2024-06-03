@@ -1,5 +1,8 @@
 using Ap1_P1_JairoCamilo;
 using Ap1_P1_JairoCamilo.Components;
+using Ap1_P1_JairoCamilo.DAL;
+using Ap1_P1_JairoCamilo.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,9 +10,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+//Inyección del contexto
 var ConStr = builder.Configuration.GetConnectionString("ConStr");
+builder.Services.AddDbContext<Contexto>(c => c.UseSqlite(ConStr));
 
+//Inyección de bootstrap
 builder.Services.AddBlazorBootstrap();
+
+//Inyección del service
+builder.Services.AddScoped<ArticulosService>();
 
 var app = builder.Build();
 
