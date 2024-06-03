@@ -64,4 +64,9 @@ public class ArticulosService
             .AsNoTracking().Where(criterio)
             .ToListAsync();
     }
+
+    public async Task<bool> ExisteArticuloConDescripcion(string articulo)
+    {
+        return await _contexto.Articulos.AllAsync(a => a.Descripcion == articulo);
+    }
 }
