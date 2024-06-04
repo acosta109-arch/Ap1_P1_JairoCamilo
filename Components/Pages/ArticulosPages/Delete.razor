@@ -1,0 +1,84 @@
+﻿@page "/Delete/{articulosId:int}"
+@page "/Delete"
+@rendermode InteractiveServer
+@inject ArticulosService articulosService
+@inject NavigationManager navigation
+
+<PageTitle>Eliminar articulo</PageTitle>
+<EditForm Model="articulos" OnValidSubmit="EliminarArticulo">
+    <DataAnnotationsValidator/>
+    <div class="container">
+        <div class="card shadow-lg">
+            <div class="card-header">
+                <h4><strong>Eliminar articulo</strong></h4>
+            </div>
+            <div class="card-body">
+                <h6><strong>&Eacute;stas seguro de que quieres eliminar este articulo?</strong></h6>
+                <div class="mb-1">
+                    <p class="mb-0">ArticuloId: @articulos.ArticuloId</p>
+                </div>
+                <div class="mb-1">
+                    <p class="mb-0">Descripci&oacute;n: @articulos.Descripcion</p>
+                </div>
+                <div class="mb-1">
+                    <p class="mb-0">Costo: @articulos.Costo</p>
+                </div>
+                <div class="mb-1">
+                    <p class="mb-0">Ganancia: @articulos.Ganancia</p>
+                </div>
+                <div class="mb-1">
+                    <p class="mb-0">Precio: @articulos.Precio</p>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-primary" @onclick="Volver"><Icon Name="IconName.Arrow90DegLeft"></Icon> Volver</button>
+                <button class="btn btn-danger" @onclick="EliminarArticulo"><Icon Name="IconName.Trash"></Icon> Eliminar</button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+@code {
+    [Parameter]
+    public int articulosId { get; set; }
+    public Articulos articulos { get; set; } = new Articulos();
+    public List<ToastMessage> MensajeToast { get; set; } = new List<ToastMessage>();
+
+    private ToastMessage CreateToastMessage(ToastType toastType, string mensaje)
+       => new ToastMessage
+       {
+           Type = toastType,
+           Title = "Notificación",
+           HelpText = $"{DateTime.Now}",
+           Message = mensaje,
+       };
+
+    private void Mensaje(ToastType toastType, string mensaje)
+    {
+        MensajeToast.Add(CreateToastMessage(toastType, mensaje));
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (articulosId > 0)
+            articulos = (await articulosService.Buscar(articulosId));
+    }
+
+    public async Task EliminarArticulo()
+    {
+        var eliminar = await articulosService.Eliminar(articulos.ArticuloId);
+        if (eliminar)
+        {
+            Mensaje(ToastType.Success, "Articulo eliminado correctamente.");
+            Volver();
+        }
+        else
+        {
+            Mensaje(ToastType.Success, "El articulo no se pudo eliminar.");
+        }
+    }
+
+    public void Volver()
+    {
+        navigation.NavigateTo("/Index");
+    }
+}
