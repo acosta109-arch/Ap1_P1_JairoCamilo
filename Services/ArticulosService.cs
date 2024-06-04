@@ -72,6 +72,6 @@ public class ArticulosService
 
     public decimal CalcularCostoConGanancia(decimal costo, decimal porcentajeGanancia)
     {
-        return costo + (costo * porcentajeGanancia / 100);
+        return (costo * porcentajeGanancia / 100) + costo;
     }
 }
