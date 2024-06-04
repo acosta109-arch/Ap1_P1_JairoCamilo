@@ -4,7 +4,7 @@
 @inject ArticulosService articulosService
 @inject NavigationManager navigation
 
-<PageTitle>Modificar nuevo articulo</PageTitle>
+<PageTitle>Modificar nuevo art&iacute;culo</PageTitle>
 <EditForm Model="articulos" OnValidSubmit="Modificar">
     <DataAnnotationsValidator />
     <Toasts class="p-3" Messages="MensajeToast" Placement="ToastsPlacement.TopRight" />
@@ -12,12 +12,12 @@
         <div class="card shadow-lg">
             @*Header*@
             <div class="card-header bg-success text-white">
-                <h1><strong>Modificar nuevo articulo</strong></h1>
+                <h1><strong>Modificar nuevo art&iacute;culo</strong></h1>
             </div>
             @*Body*@
             <div class="card-body">
                 @*Datos*@
-                <label for="id" class="form-label"><strong>ArticuloId</strong></label>
+                <label for="id" class="form-label"><strong>Art&iacute;culoId</strong></label>
                 <InputNumber id="id" class="form-control" @bind-Value="articulos.ArticuloId" readonly></InputNumber>
 
                 <label for="descripcion" class="form-label"><strong>Descripci&oacute;n</strong></label>
@@ -51,6 +51,12 @@
     public Articulos articulos { get; set; } = new Articulos();
     public List<ToastMessage> MensajeToast { get; set; } = new List<ToastMessage>();
     public bool Repetida { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (articulosId > 0)
+            articulos = await articulosService.Buscar(articulosId);
+    }
 
     public async Task<bool> Validar()
     {

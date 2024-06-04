@@ -4,18 +4,18 @@
 @inject ArticulosService articulosService
 @inject NavigationManager navigation
 
-<PageTitle>Eliminar articulo</PageTitle>
+<PageTitle>Eliminar art&iacute;culo</PageTitle>
 <EditForm Model="articulos" OnValidSubmit="EliminarArticulo">
     <DataAnnotationsValidator/>
     <div class="container">
         <div class="card shadow-lg">
             <div class="card-header bg-success text-white">
-                <h4><strong>Eliminar articulo</strong></h4>
+                <h4><strong>Eliminar art&iacute;culo</strong></h4>
             </div>
             <div class="card-body">
-                <h6><strong>&Eacute;stas seguro de que quieres eliminar este articulo?</strong></h6>
+                <h6><strong>¿&Eacute;stas seguro de que quieres eliminar este art&iacute;culo?</strong></h6>
                 <div class="mb-1">
-                    <p class="mb-0">ArticuloId: @articulos.ArticuloId</p>
+                    <p class="mb-0">Art&iacute;culoId: @articulos.ArticuloId</p>
                 </div>
                 <div class="mb-1">
                     <p class="mb-0">Descripci&oacute;n: @articulos.Descripcion</p>
