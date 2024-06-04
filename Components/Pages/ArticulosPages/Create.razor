@@ -1,4 +1,4 @@
-﻿@page "/Create"
+﻿@page "/Create/Articulos"
 @rendermode InteractiveServer
 @inject ArticulosService articulosService
 @inject NavigationManager navigation
@@ -36,7 +36,7 @@
                 <ValidationMessage For="@(()=> articulos.Precio)"></ValidationMessage>
             </div>
             @*Footer*@
-            <div class="card footer">
+            <div class="card-footer">
                 <button type="button" class="btn btn-primary"><Icon Name="IconName.Arrow90DegLeft" @onclick="Volver"></Icon> Volver</button>
                 <button type="submit" class="btn btn-success"><Icon Name="IconName.Floppy"></Icon> Guardar</button>
             </div>
@@ -85,6 +85,6 @@
 
     public void Volver()
     {
-        navigation.NavigateTo("/Index");
+        navigation.NavigateTo("/Index/Articulos");
     }
 }

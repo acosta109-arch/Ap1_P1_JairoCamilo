@@ -1,4 +1,4 @@
-﻿@page "/Index"
+﻿@page "/Index/Articulos"
 @rendermode InteractiveServer
 @inject ArticulosService articulosService
 @inject NavigationManager navigation
@@ -31,7 +31,7 @@
             </div>
         </div>
         <div>
-            <a href="/Create" class="btn btn-success"><Icon Name="IconName.Plus"></Icon>  Nuevo</a>
+            <a href="/Create/Articulos" class="btn btn-success"><Icon Name="IconName.Plus"></Icon>  Nuevo</a>
         </div>
         @*Body*@
         <div class="card-body">
@@ -57,10 +57,10 @@
                             <td>@articulo.Ganancia</td>
                             <td>@articulo.Precio</td>
                             <td class="text-center">
-                                <a href="/Edit/@articulo.ArticuloId" class="btn btn-primary"><Icon Name="IconName.Pencil"></Icon> Modificar</a>
+                                <a href="/Edit/Articulos/@articulo.ArticuloId" class="btn btn-primary"><Icon Name="IconName.Pencil"></Icon> Modificar</a>
                             </td>
                             <td class="text-center">
-                                <a href="/Delete/@articulo.ArticuloId" class="btn btn-danger"><Icon Name="IconName.Trash"></Icon>  Eliminar</a>
+                                <a href="/Delete/Articulos/@articulo.ArticuloId" class="btn btn-danger"><Icon Name="IconName.Trash"></Icon>  Eliminar</a>
                             </td>
                         </tr>
                     }
