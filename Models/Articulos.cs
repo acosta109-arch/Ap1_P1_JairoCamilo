@@ -9,7 +9,7 @@ public class Articulos
     [Key]
     public int ArticuloId { get; set; }
 
-    [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Favor de digitar una descripción.")]
+    [Required(ErrorMessage = "Favor de digitar una descripción.")]
     public string Descripcion { get; set; }
 
     [Range(1,200000, ErrorMessage = "Favor de digitar el costo del articulo.")]
