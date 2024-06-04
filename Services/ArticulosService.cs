@@ -33,7 +33,7 @@ public class ArticulosService
 
     public async Task<bool> Guardar(Articulos articulo)
     {
-        if(! await Existe(articulo.ArticuloId))
+        if (!await Existe(articulo.ArticuloId))
         {
             return await Insertar(articulo);
         }
@@ -60,13 +60,18 @@ public class ArticulosService
 
     public async Task<List<Articulos>> Listar(Expression<Func<Articulos, bool>> criterio)
     {
-        return await _contexto.Articulos
-            .AsNoTracking().Where(criterio)
+        return await _contexto.Articulos.AsNoTracking()
+            .Where(criterio)
             .ToListAsync();
     }
 
-    public async Task<bool> ExisteArticuloConDescripcion(string articulo)
+    public async Task<bool> ExisteArticuloConDescripcion(string descripcion)
     {
-        return await _contexto.Articulos.AllAsync(a => a.Descripcion == articulo);
+        return await _contexto.Articulos.AnyAsync(a => a.Descripcion == descripcion);
+    }
+
+    public decimal CalcularCostoConGanancia(decimal costo, decimal porcentajeGanancia)
+    {
+        return costo + (costo * porcentajeGanancia / 100);
     }
 }
