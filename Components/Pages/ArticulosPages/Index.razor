@@ -1,0 +1,127 @@
+﻿@page "/Index"
+@rendermode InteractiveServer
+@inject ArticulosService articulosService
+@inject NavigationManager navigation
+
+<PageTitle>Articulos</PageTitle>
+<div class="container">
+    <div class="card shadow-lg">
+        @*Header*@
+        <div class="card-header">
+            <h1><strong>Articulos</strong></h1>
+            @*Filtro*@
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label for="Filtro" class="form-label"><strong>Filtrar por:</strong></label>
+                    <select @bind="filtro" class="form-control">
+                        <option value="id">ArticuloId</option>
+                        <option value="descripcion">Descripci&oacute;n</option>
+                        <option value="costo">Costo</option>
+                        <option value="ganancia">Ganancia</option>
+                        <option value="precio">Precio</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label @bind="ValorFiltro" class="form-label"><strong>B&uacute;squeda: </strong></label>
+                    <div class="input-group">
+                        <input @bind="ValorFiltro" class="form-control" placeholder="Buscar" />
+                        <button type="button" class="btn btn-primary" @onclick="Buscar"><Icon Name="IconName.Search"></Icon>  Buscar</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <a href="/Create" class="btn btn-success"><Icon Name="IconName.Plus"></Icon>  Nuevo</a>
+            </div>
+        </div>
+        @*Body*@
+        <div class="card-body">
+            <table class="table table-light">
+                <thead>
+                    <tr>
+                        <th>ArticuloId</th>
+                        <th>Descripci&oacute;n</th>
+                        <th>Costo</th>
+                        <th>Ganancia</th>
+                        <th>Precio</th>
+                        <th>Modificar</th>
+                        <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var articulo in Filtrados)
+                    {
+                        <tr>
+                            <td>@articulo.ArticuloId</td>
+                            <td>@articulo.Descripcion</td>
+                            <td>@articulo.Costo</td>
+                            <td>@articulo.Ganancia</td>
+                            <td>@articulo.Precio</td>
+                            <td class="text-center">
+                                <a href="/Edit/@articulo.ArticuloId" class="btn btn-primary"><Icon Name="IconName.Pencil"></Icon> Modificar</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="/Delete/@articulo.ArticuloId" class="btn btn-danger"><Icon Name="IconName.Trash"></Icon>  Eliminar</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    public List<Articulos> articulos { get; set; } = new List<Articulos>();
+    public List<Articulos> Filtrados { get; set; } = new List<Articulos>();
+    public string filtro { get; set; } = "id";
+    public string ValorFiltro { get; set; } = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        articulos = await articulosService.Listar(a => true);
+        Filtrados = articulos;
+    }
+
+
+
+    private void Buscar()
+    {
+        if (string.IsNullOrEmpty(ValorFiltro))
+        {
+            Filtrados = articulos;
+        }
+        else
+        {
+            switch (filtro)
+            {
+                case "id":
+                    if (int.TryParse(ValorFiltro, out int id))
+                    {
+                        Filtrados = articulos.Where(a => a.ArticuloId == id).ToList();
+                    }
+                    break;
+                case "descripcion":
+                    Filtrados = articulos.Where(a => a.Descripcion.Contains(ValorFiltro, StringComparison.OrdinalIgnoreCase)).ToList();
+                    break;
+                case "costo":
+                    if (decimal.TryParse(ValorFiltro, out decimal costo))
+                    {
+                        Filtrados = articulos.Where(a => a.Costo == costo).ToList();
+                    }
+                    break;
+                case "ganancia":
+                    if (decimal.TryParse(ValorFiltro, out decimal ganancia))
+                    {
+                        Filtrados = articulos.Where(a => a.Ganancia == ganancia).ToList();
+                    }
+                    break;
+                case "precio":
+                    if (decimal.TryParse(ValorFiltro, out decimal precio))
+                    {
+                        Filtrados = articulos.Where(a => a.Precio == precio).ToList();
+                    }
+                    break;
+            }
+        }
+    }
+}
